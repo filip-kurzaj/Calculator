@@ -70,11 +70,11 @@ CMP CX,4h
 JE ILOCZYN
 CMP CX,5h        
 JE ILORAZ    
-CMP CX,6h         ; SIGKRISI AMA TO CX INE ISO ME 6  
-JE LOGIKO_AND     ;   EAN TO CX INE ISO ME 6 TOTE TO PROGRAMMA THA KANI ALMA EKI POU VRISKETE TO LABEL ME ONOMA "LOGIKO_AND"  
-CMP CX,7h         ; SIGKRISI AMA TO CX INE ISO ME 7  
-JE LOGIKO_OR      ;   EAN TO CX INE ISO ME 7 TOTE TO PROGRAMMA THA KANI ALMA EKI POU VRISKETE TO LABEL ME ONOMA "LOGIKO_OR"  
-CMP CX,8h         ; SIGKRISI AMA TO CX INE ISO ME 8  
+CMP CX,6h        
+JE LOGIKO_AND
+CMP CX,7h      
+JE LOGIKO_OR    
+CMP CX,8h    
 JE LOGIKO_XOR
  
 ; ( H )  
@@ -87,87 +87,87 @@ JMP FALSE_A
   
  ; ( 1 ) 
   
-NIC:                                   ; ERXETE EDO OTAN TO CX INE ISO ME TO 1  
-                      JMP START           ; KANI ALMA STO TELOS TOU PROGRAMMATOS  
+NIC:                                 
+                      JMP START      
                      
           
           
  ; ( 2 ) 
            
-SUMA:                                ; ERXETE EDO OTAN TO CX INE ISO ME TO 2  
-                   CALL SUMA_a       ; KALOUME TIN IPOROUTINA "PROSTHESIa"  
-                   JMP WYNIK         ; KANI ALMA STO LABEL "APOTELESMA" GIA TIN EMFANISI TOU APOTELESMATOS   
+SUMA:                            
+                   CALL SUMA_a    
+                   JMP WYNIK    
 SUMA_a:                                   
-                      PRINT 'SUMA'  ; EMFANISI MINIMATOS  
-                      ADC AX,[0202h]      ; KANI PROSTHESI OTI IPARXI STON AX ME OTI IPARXI STI THESI MNIMIS [0202h] KAI APOTHIKEVI TO APOTELESMA STON AX  
-                      MOV [0204h],AX      ; KANI ANTIGRAFI TO PERIEXOMENO TOU AX STI THESI MNIMIS [0204] 
-                      RET                 ; META TO TELOS TIS IPOROUTINAS EPISTREFOUME STIN AMESOS EPOMENI ENTOLI APO EKI POU TIN KALESAME   
+                      PRINT 'SUMA' 
+                      ADC AX,[0202h]    
+                      MOV [0204h],AX  
+                      RET                 
   
  ; ( 3 )    
-ROZNICA:                                  ; ERXETE EDO OTAN TO CX INE ISO ME TO 3   
-                   CALL ROZNICA_a         ; KALOUME TIN IPOROUTINA "AFERESIa"  
-                   JMP WYNIK         ; KANI ALMA STO LABEL "APOTELESMA"  
+ROZNICA:                                
+                   CALL ROZNICA_a        
+                   JMP WYNIK      
 ROZNICA_a:         
-                      PRINT 'ROZNICA'    ; EMFANISI MINIMATOS  
-                      SBB AX,[0202h]      ; KANI AFAIRESI OTI IPARXI STON AX ME OTI IPARXI STI THESI MNIMIS [0202h] KAI APOTHIKEVI TO APOTELESMA STON AX  
-                      MOV [0204h],AX      ; KANI ANTIGRAFI TO PERIEXOMENO TOU AX STI THESI MNIMIS [0204] 
-                      RET                 ; META TO TELOS TIS IPOROUTINAS EPISTREFOUME STIN AMESOS EPOMENI ENTOLI APO EKI POU TIN KALESAME  
+                      PRINT 'ROZNICA'   
+                      SBB AX,[0202h]  
+                      MOV [0204h],AX   
+                      RET              
  ; ( 4 ) 
   
-ILOCZYN:                              ; ERXETE EDO OTAN TO CX INE ISO ME TO 4   
-                   CALL ILOCZYN_a     ; KALOUME TIN IPOROUTINA "POLLAPLASIASMOSa"  
-                   JMP WYNIK             ; KANI ALMA STO LABEL "APOTELESMA" GIA TIN EMFANISI TOU APOTELESMATOS   
+ILOCZYN:                            
+                   CALL ILOCZYN_a    
+                   JMP WYNIK       
 ILOCZYN_a:    
-                      PRINT 'ILOCZYN'; EMFANISI MINIMATOS    
-                      MOV BX,[0202h]          ; ANTIGRAFI STON KATAXORITI BX OTI IPARXI STI THESI MNIMIS [0202h]  
-                      MUL BX                  ; POLLAPLASIASMOS TOU KATAXORITI BX ME TON KATAXORITI AX KAI APOTHIKEVETE TO APOTELESMA STON AX  
-                      MOV [0204h],AX          ; KANI ANTIGRAFI TO PERIEXOMENO TOU AX STI THESI MNIMIS [0204] 
-                      RET                     ; META TO TELOS TIS IPOROUTINAS EPISTREFOUME STIN AMESOS EPOMENI ENTOLI APO EKI POU TIN KALESAME  
+                      PRINT 'ILOCZYN'  
+                      MOV BX,[0202h]        
+                      MUL BX               
+                      MOV [0204h],AX      
+                      RET                 
             
 ; ( 5 )            
           
-ILORAZ:                             ; ERXETE EDO OTAN TO CX INE ISO ME TO 5   
-                   CALL ILORAZ_a    ; KALOUME TIN IPOROUTINA "DIERESIa"  
-                   JMP WYNIK    ; KANI ALMA STO LABEL "APOTELESMA" GIA TIN EMFANISI TOU APOTELESMATOS   
+ILORAZ:                            
+                   CALL ILORAZ_a
+                   JMP WYNIK  
 ILORAZ_a:      
-                   PRINT 'ILORAZ'  ; EMFANISI MINIMATOS   
-                      MOV BX,[0202h] ; ANTIGRAFI STON KATAXORITI BX OTI IPARXI STI THESI MNIMIS [0202h]  
-                      DIV BX         ; DIERESI TOU KATAXORITI BX ME TON KATAXORITI AX, TO APOTELESMA APOTHIKEVETE STON AX KAI TO IPOLIPO STON DX  
-                      MOV [0204h],AX ; KANI ANTIGRAFI TO PERIEXOMENO TOU AX STI THESI MNIMIS [0204] 
-                      MOV [0206h],DX ; KANI ANTIGRAFI TO PERIEXOMENO TOU DX STI THESI MNIMIS [0206]  
-                      RET            ; META TO TELOS TIS IPOROUTINAS EPISTREFOUME STIN AMESOS EPOMENI ENTOLI APO EKI POU TIN KALESAME  
+                   PRINT 'ILORAZ' 
+                      MOV BX,[0202h]
+                      DIV BX        
+                      MOV [0204h],AX 
+                      MOV [0206h],DX
+                      RET         
              
  ; ( 6 )            
              
-LOGIKO_AND:                               ; ERXETE EDO OTAN TO CX INE ISO ME TO 6  
-                   CALL LOGIKO_AND_a      ; KALOUME TIN IPOROUTINA "LOGIKO_ANDa"  
-                   JMP WYNIK         ; KANI ALMA STO LABEL "APOTELESMA" GIA TIN EMFANISI TOU APOTELESMATOS   
+LOGIKO_AND:                        
+                   CALL LOGIKO_AND_a    
+                   JMP WYNIK       
 LOGIKO_AND_a:     
-                      PRINT 'LOGIKO AND ' ; EMFANISI MINIMATOS    
-                      AND AX,[0202h]      ; XRISIMOPOIEI TIN PRAKSI TOU LOGIKOU AND GIA TO AX ME OTI IPARXI STI THESI MNIMIS [0202h] KAI TO APOTELESMA APOTHIKEVETE STON AX  
-                      MOV [0204h],AX      ; KANI ANTIGRAFI TO PERIEXOMENO TOU AX STI THESI MNIMIS [0204] 
-                      RET                 ; META TO TELOS TIS IPOROUTINAS EPISTREFOUME STIN AMESOS EPOMENI ENTOLI APO EKI POU TIN KALESAME  
+                      PRINT 'LOGIKO AND '
+                      AND AX,[0202h]     
+                      MOV [0204h],AX    
+                      RET             
              
  ; ( 7 )            
              
-LOGIKO_OR:                                  ; ERXETE EDO OTAN TO CX INE ISO ME TO 7  
-                   CALL LOGIKO_OR_a         ; KALOUME TIN IPOROUTINA "LOGIKO_ORa"  
-                   JMP WYNIK           ; KANI ALMA STO LABEL "APOTELESMA" GIA TIN EMFANISI TOU APOTELESMATOS   
+LOGIKO_OR:                              
+                   CALL LOGIKO_OR_a    
+                   JMP WYNIK       
 LOGIKO_OR_a:    
-                      PRINT 'LOGIKO OR '    ; EMFANISI MINIMATOS   
-                      OR AX,[0202h]         ; XRISIMOPOIEI TIN PRAKSI TOU LOGIKOU OR GIA TO AX ME OTI IPARXI STI THESI MNIMIS [0202h] KAI TO APOTELESMA APOTHIKEVETE STON AX  
-                      MOV [0204h],AX        ; KANI ANTIGRAFI TO PERIEXOMENO TOU AX STI THESI MNIMIS [0204] 
-                      RET                   ; META TO TELOS TIS IPOROUTINAS EPISTREFOUME STIN AMESOS EPOMENI ENTOLI APO EKI POU TIN KALESAME  
+                      PRINT 'LOGIKO OR '  
+                      OR AX,[0202h]        
+                      MOV [0204h],AX      
+                      RET                
            
  ; ( 8 )           
            
-LOGIKO_XOR:                                 ; ERXETE EDO OTAN TO CX INE ISO ME TO 8  
-                   CALL LOGIKO_XOR_a        ; KALOUME TIN IPOROUTINA "LOGIKO_XORa"  
-                   JMP WYNIK           ; KANI ALMA STO LABEL "APOTELESMA" GIA TIN EMFANISI TOU APOTELESMATOS   
+LOGIKO_XOR:                                 
+                   CALL LOGIKO_XOR_a   
+                   JMP WYNIK         
 LOGIKO_XOR_a:     
-                      PRINT 'LOGIKO XOR '   ; EMFANISI MINIMATOS        
-                      XOR AX,[0202h]        ; XRISIMOPOIEI TIN PRAKSI TOU LOGIKOU XOR GIA TO AX ME OTI IPARXI STI THESI MNIMIS [0202h] KAI TO APOTELESMA APOTHIKEVETE STON AX  
-                      MOV [0204h],AX        ; KANI ANTIGRAFI TO PERIEXOMENO TOU AX STI THESI MNIMIS [0204] 
+                      PRINT 'LOGIKO XOR '     
+                      XOR AX,[0202h]      
+                      MOV [0204h],AX    
                       RET     
 ; ( J ) 
              
@@ -188,12 +188,12 @@ WYNIK:
 ; ( K ) 
   
 CHOOSE_FALSE_B:    
-                   CALL SCAN_NUM      ; DINI O XRISTIS ENA NOUMERO KAI AFTOMATA APOTHIKEVETE STON KATAXORITI CX  
-                   CMP CX,1h          ; SIGKRISI AN TO CX INE ISO ME 1 TOTE EKTELITE I AMESOS EPOMENI ENTOLI IDALOS AGNOA TIN AMESOS EPOMENI ENTOLI  
-                   JE AGAIN           ; ALMA STO LABEL "AGAIN"  
-                   CMP CX,2h          ; SIGKRISI AN TO CX INE ISO ME 2 TOTE EKTELITE I AMESOS EPOMENI ENTOLI IDALOS AGNOA TIN AMESOS EPOMENI ENTOLI  
-                   JE TELOS           ; ALMA STO LABEL "TELOS"  
-                   JMP FALSE_B        ; AN KAMIA APO TIS PROIGOUMENES SINTHIKES DEN ISXIEI TOTE EKTELITE  AFTI I ENTOLI I OPOIA KANI ALMA STO LABEL "FALSE_B" KAI KSANADINI O XRISTIS EPILOGI  
+                   CALL SCAN_NUM    
+                   CMP CX,1h      
+                   JE AGAIN       
+                   CMP CX,2h     
+                   JE TELOS        
+                   JMP FALSE_B    
   
   
   
@@ -212,16 +212,16 @@ AGAIN:
   
 FALSE_A:            
        PRINT 'WYBOR JEST ZLY'   
-       GOTOXY 2,15                                    
+       GOTOXY 2,16                                    
        PRINT 'WYBIERZ PONOWNIE: '                   
        JMP CHOOSE_FALSE_A                              
                                   
          
   
 FALSE_B:                                               
-               GOTOXY 1,23                                  
+               GOTOXY 1,22                                  
                PRINT 'WYBOR JEST ZLY' 
-               GOTOXY 1,22  
+               GOTOXY 1,23  
                PRINT 'WYBIERZ PONOWNIE: '              
                JMP CHOOSE_FALSE_B                          
      
@@ -236,7 +236,7 @@ FALSE_B:
        GOTOXY 28,5                          
        PRINT 'FILIP KURZAJ'    
        GOTOXY 28,6                          
-       PRINT 'NUMER ALBUMU'                     
+       PRINT 'NUMER ALBUMU: 102520'                     
        GOTOXY 28,7                           
        PRINT 'KLIKNIJ DOWOLNY PRZYCISK'
        MOV AH,0h   
